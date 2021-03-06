@@ -8,7 +8,7 @@
       books: '#template-book',
     },
     containerOf: {
-      books: '.books-panel .books-list',
+      books: '.books-list',
     },
   };
 
@@ -18,15 +18,15 @@
 
   function render() {
     //console.log(document.querySelector(select.templateOf.books));
-    for(book in dataSource.books){
-      const bookHTML = templates.books(templates.book);
-      //console.log(bookHTML);
+    for(let book of dataSource.books){
+      const bookHTML = templates.books(book);
+      console.log('bookHTML',bookHTML);
 
       const bookDOM = utils.createDOMFromHTML(bookHTML);
-      console.log(bookDOM);
+      console.log('bookDOM',bookDOM);
 
       const bookContainer = document.querySelector(select.containerOf.books);
-      console.log(bookContainer);
+      console.log('bookContainer',bookContainer);
       bookContainer.appendChild(bookDOM);
     }
   }
