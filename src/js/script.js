@@ -12,8 +12,23 @@
     },
   };
 
+  const templates = {
+    books: Handlebars.compile(document.querySelector(select.templateOf.books).innerHTML),
+  };
+
   function render() {
-    console.log(document.querySelector(select.templateOf.books));
+    //console.log(document.querySelector(select.templateOf.books));
+    for(book in dataSource.books){
+      const bookHTML = templates.books(templates.book);
+      //console.log(bookHTML);
+
+      const bookDOM = utils.createDOMFromHTML(bookHTML);
+      console.log(bookDOM);
+
+      const bookContainer = document.querySelector(select.containerOf.books);
+      console.log(bookContainer);
+      bookContainer.appendChild(bookDOM);
+    }
   }
 
   render();
