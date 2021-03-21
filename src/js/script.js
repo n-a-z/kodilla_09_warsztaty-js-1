@@ -67,6 +67,7 @@
       //const thisBooksList = this;
 
       const favoriteBooks = this.favoriteBooks;
+      const filters = this.filters;
 
       this.bookContainer.addEventListener('dblclick', function (event) {
         event.preventDefault();
@@ -92,19 +93,21 @@
       this.filterContainer.addEventListener('click', function (event) {
         const clickedElement = event.target;
         if (
-          clickedElement.tagName === "INPUT" &&
-          clickedElement.name === "filter" &&
+          clickedElement.tagName === 'INPUT' &&
+          clickedElement.name === 'filter' &&
           clickedElement.type === 'checkbox'
         ) {
-          console.log(clickedElement.value);
+          if (clickedElement.checked) filters.push(clickedElement.value);
+          if (!clickedElement.checked) filters.splice(filters.indexOf(clickedElement.value, 1));
         }
+
+        console.log(filters);
 
       });
 
     }
 
     filterBooks() {
-      this.filters.push('a');
       //console.log(this.filters);
     }
   }
