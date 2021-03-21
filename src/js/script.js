@@ -45,6 +45,7 @@
       //thisBooksList.favoriteBooks = []; //Pytanie 1: jak używać this jako const bez przypisywania do nowej nazwy? Czyli żeby używać wszędzie this zamiast thisNazwa. Jak nie zadeklarowałem z nazwą to zwracało mi, że tablice favoriteBooks jest undefined.
 
       this.bookContainer = document.querySelector(select.containerOf.books);
+      this.filterContainer = document.querySelector(select.containerOf.filters);
     }
 
     render() {
@@ -84,15 +85,19 @@
           if (!favoriteBooks.includes(imageID)) favoriteBooks.push(imageID);
           else if (favoriteBooks.includes(imageID))
             favoriteBooks.splice(favoriteBooks.indexOf(imageID, 1));
-          console.log(favoriteBooks);
+          //console.log(favoriteBooks);
         }
+      });
+
+      this.filterContainer.addEventListener('click', function (event) {
+        console.log('hello',event);
       });
 
     }
 
     filterBooks() {
       this.filters.push('a');
-      console.log(this.filters);
+      //console.log(this.filters);
     }
   }
 
