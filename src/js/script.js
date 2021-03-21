@@ -90,7 +90,15 @@
       });
 
       this.filterContainer.addEventListener('click', function (event) {
-        console.log('hello',event);
+        const clickedElement = event.target;
+        if (
+          clickedElement.tagName === "INPUT" &&
+          clickedElement.name === "filter" &&
+          clickedElement.type === 'checkbox'
+        ) {
+          console.log(clickedElement.value);
+        }
+
       });
 
     }
