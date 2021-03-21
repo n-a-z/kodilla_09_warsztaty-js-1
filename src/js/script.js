@@ -1,18 +1,18 @@
 /* global Handlebars, utils, dataSource */ // eslint-disable-line no-unused-vars
 
 {
-  ("use strict");
+  ('use strict');
 
   const select = {
     templateOf: {
-      books: "#template-book",
+      books: '#template-book',
     },
     containerOf: {
-      books: ".books-list",
-      filters: ".filters",
+      books: '.books-list',
+      filters: '.filters',
     },
     book: {
-      image: ".book__image",
+      image: '.book__image',
     },
   };
 
@@ -22,9 +22,6 @@
     ),
   };
 
-  const favoriteBooks = []; //Pytanie 1: Wyciągnięte poza classe, gdyż this zwracało undefined zadeklarowane jako this.favoriteBooks = [];
-  const filters = [];
-
   class BooksList {
     constructor() {
       //const thisBooksList = this; //Pytanie 1: jak używać this jako const bez przypisywania do nowej nazwy? Czyli żeby używać wszędzie this zamiast thisNazwa. Jak nie zadeklarowałem z nazwą to zwracało mi, że tablice favoriteBooks jest undefined.
@@ -33,6 +30,7 @@
       this.getElements();
       this.render();
       this.initActions();
+      this.filterBooks();
     }
 
     initData() {
@@ -42,8 +40,8 @@
 
     getElements() {
       //const thisBooksList = this;
-
-      //this.favoriteBooks = []; //Pytanie 1: Wyciągnięte poza classe, gdyż this zwracało undefined zadeklarowane jako this.favoriteBooks = [];
+      this.filters = [];
+      this.favoriteBooks = []; //Pytanie 1: Wyciągnięte poza classe, gdyż this zwracało undefined zadeklarowane jako this.favoriteBooks = [];
       //thisBooksList.favoriteBooks = []; //Pytanie 1: jak używać this jako const bez przypisywania do nowej nazwy? Czyli żeby używać wszędzie this zamiast thisNazwa. Jak nie zadeklarowałem z nazwą to zwracało mi, że tablice favoriteBooks jest undefined.
 
       this.bookContainer = document.querySelector(select.containerOf.books);
@@ -67,7 +65,9 @@
     initActions() {
       //const thisBooksList = this;
 
-      this.bookContainer.addEventListener("dblclick", function (event) {
+      const favoriteBooks = this.favoriteBooks;
+
+      this.bookContainer.addEventListener('dblclick', function (event) {
         event.preventDefault();
 
         //const clickedElement = event.target;
@@ -76,22 +76,23 @@
         //console.log(select.book.image.substring(1));
 
         if (clickedElement.classList.contains(select.book.image.substring(1))) {
-          clickedElement.classList.toggle("favorite");
-          let imageID = clickedElement.getAttribute("data-id");
+          clickedElement.classList.toggle('favorite');
+          let imageID = clickedElement.getAttribute('data-id');
           //console.log(clickedElement);
 
+          //Pytanie 1: dlaczego this.favoriteBooks w tym miejscu zwraca undefined jeżeli najpierw nie przypiszemy do const?
           if (!favoriteBooks.includes(imageID)) favoriteBooks.push(imageID);
           else if (favoriteBooks.includes(imageID))
             favoriteBooks.splice(favoriteBooks.indexOf(imageID, 1));
-          //console.log(favoriteBooks);
+          console.log(favoriteBooks);
         }
       });
 
-      //console.log("test");
     }
 
     filterBooks() {
-      console.log(filters);
+      this.filters.push('a');
+      console.log(this.filters);
     }
   }
 
