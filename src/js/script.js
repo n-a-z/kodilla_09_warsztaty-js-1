@@ -1,18 +1,18 @@
 /* global Handlebars, utils, dataSource */ // eslint-disable-line no-unused-vars
 
 {
-  ("use strict");
+  ('use strict');
 
   const select = {
     templateOf: {
-      books: "#template-book",
+      books: '#template-book',
     },
     containerOf: {
-      books: ".books-list",
-      filters: ".filters",
+      books: '.books-list',
+      filters: '.filters',
     },
     book: {
-      image: ".book__image",
+      image: '.book__image',
     },
   };
 
@@ -68,7 +68,7 @@
       const favoriteBooks = this.favoriteBooks;
       //const filters = this.filters;
 
-      this.bookContainer.addEventListener("dblclick", function (event) {
+      this.bookContainer.addEventListener('dblclick', function (event) {
         event.preventDefault();
 
         //const clickedElement = event.target;
@@ -77,8 +77,8 @@
         //console.log(select.book.image.substring(1));
 
         if (clickedElement.classList.contains(select.book.image.substring(1))) {
-          clickedElement.classList.toggle("favorite");
-          let imageID = clickedElement.getAttribute("data-id");
+          clickedElement.classList.toggle('favorite');
+          let imageID = clickedElement.getAttribute('data-id');
           //console.log(clickedElement);
 
           //Pytanie 1: dlaczego this.favoriteBooks w tym miejscu zwraca undefined jeżeli najpierw nie przypiszemy do const?
@@ -89,12 +89,12 @@
         }
       });
 
-      thisBooksList.filterContainer.addEventListener("click", function (event) {
+      thisBooksList.filterContainer.addEventListener('click', function (event) {
         const clickedElement = event.target;
         if (
-          clickedElement.tagName === "INPUT" &&
-          clickedElement.name === "filter" &&
-          clickedElement.type === "checkbox"
+          clickedElement.tagName === 'INPUT' &&
+          clickedElement.name === 'filter' &&
+          clickedElement.type === 'checkbox'
         ) {
           if (clickedElement.checked)
             thisBooksList.filters.push(clickedElement.value);
@@ -112,34 +112,26 @@
 
     filterBooks() {
       const thisBooksList = this;
+      //console.log(thisBooksList.filters);
 
       for (let book of thisBooksList.data) {
-        //console.log(book);
         //console.log(book.details);
-
+        //console.log(book);
         let shouldBeHidden = false;
         for (let filter of thisBooksList.filters) {
-          //console.log(thisBooksList.filters);
-          //console.log(book.details[filter]);
+          //console.log(filter);
           if (!book.details[filter]) {
+            //console.log(book.details[filter]);
             shouldBeHidden = true;
-            //console.log(hideBook);
             break;
           }
         }
-        const hideBook = document.querySelector(
-          select.book.image + '[data-id="' + book.id + '"]'
-        );
-        //console.log(hideBook);
-        //console.log(hideBook.classList);
-
-        if (shouldBeHidden) {
-          //shouldBeHidden = true;
-          hideBook.classList.add("hidden");
-          //console.log(hideBook);
-        } else {
-          hideBook.classList.remove("hidden");
-        }
+        const bookDataID = document.querySelector(select.book.image +'[data-id="' + book.id + '"]');
+        //console.log(document.querySelector(select.book.image + bookDataID));
+        //console.log(document.querySelectorAll(select.book.image + bookDataID));
+        //console.log(document.querySelector(select.book.image));
+        if (shouldBeHidden) bookDataID.classList.add('hidden');
+        else bookDataID.classList.remove('hidden');
       }
     }
   }
