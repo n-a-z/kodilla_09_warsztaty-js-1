@@ -17,7 +17,7 @@
   };
 
   const templates = {
-    books: Handlebars.compile(
+    bookTemplate: Handlebars.compile(
       document.querySelector(select.templateOf.books).innerHTML
     ),
   };
@@ -30,6 +30,7 @@
       this.getElements();
       this.render();
       this.initActions();
+      this.determineRatingBgc();
     }
 
     initData() {
@@ -51,7 +52,21 @@
       //const thisBooksList = this;
       //console.log(document.querySelector(select.templateOf.books));
       for (let book of this.data) {
-        const bookHTML = templates.books(book);
+        console.log(book);
+        //console.log(book.rating);
+
+        const ratingWidthTemp = 10 * book.rating;
+        const ratingBgcTemp = this.determineRatingBgc(book.rating);
+
+        const bookHTML = templates.bookTemplate({
+          id: book.id,
+          price: book.price,
+          name: book.name,
+          image: book.image,
+          rating: book.rating,
+          ratingWidth: ratingWidthTemp,
+          ratingBgc: ratingBgcTemp,
+        });
         //console.log('bookHTML',bookHTML);
 
         const bookDOM = utils.createDOMFromHTML(bookHTML);
@@ -60,6 +75,24 @@
         //console.log('bookContainer',bookContainer);
         this.bookContainer.appendChild(bookDOM);
       }
+    }
+
+    determineRatingBgc(rating) {
+      let background = '';
+
+      if (rating < 6) {
+        background = 'linear-gradient(to bottom,  #fefcea 0%, #f1da36 100%);';
+      }
+      if (rating > 6 && rating <= 8) {
+        background = 'linear-gradient(to bottom, #b4df5b 0%,#b4df5b 100%);';
+      }
+      if (rating > 8 && rating <= 9) {
+        background = 'linear-gradient(to bottom, #299a0b 0%, #299a0b 100%);';
+      }
+      if (rating > 9) {
+        background = 'linear-gradient(to bottom, #ff0084 0%,#ff0084 100%);';
+      }
+      return background;
     }
 
     initActions() {
@@ -126,7 +159,9 @@
             break;
           }
         }
-        const bookDataID = document.querySelector(select.book.image +'[data-id="' + book.id + '"]');
+        const bookDataID = document.querySelector(
+          select.book.image + '[data-id="' + book.id + '"]'
+        );
         //console.log(document.querySelector(select.book.image + bookDataID));
         //console.log(document.querySelectorAll(select.book.image + bookDataID));
         //console.log(document.querySelector(select.book.image));
